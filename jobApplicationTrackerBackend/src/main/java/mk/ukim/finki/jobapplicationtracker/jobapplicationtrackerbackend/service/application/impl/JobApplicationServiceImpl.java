@@ -1,6 +1,7 @@
 package mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.service.application.impl;
 
 import mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.dto.CreateJobDto;
+import mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.dto.DetailedDisplayJob;
 import mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.dto.DisplayJob;
 import mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.dto.UpdateJobDto;
 import mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.model.Job;
@@ -56,7 +57,7 @@ public class JobApplicationServiceImpl implements JobApplicationService {
 
         URL url = jobService.findById(id).map(Job::getCompanyWebsite).orElse(null);
 
-        Optional<Job> job  = jobService.update(id,
+        Optional<Job> job = jobService.update(id,
                 jobDto.getTitle(),
                 jobDto.getCompany(),
                 jobDto.getLocation(),
@@ -77,5 +78,29 @@ public class JobApplicationServiceImpl implements JobApplicationService {
     @Override
     public void deleteById(String id) {
         jobService.deleteById(id);
+    }
+
+    @Override
+    public Optional<DetailedDisplayJob> getDetailedJobById(String id) {
+
+        if (jobService.findById(id).isEmpty()) {
+            return Optional.empty();
+        }
+
+        return jobService.findById(id).map(job -> new DetailedDisplayJob(
+                job.getTitle(),
+                job.getCompany(),
+                job.getLocation(),
+                job.getDescription(),
+                job.getFieldOfInterest(),
+                job.getPosition(),
+                job.getWorkMode(),
+                job.getWorkType(),
+                job.getCompanyWebsite(),
+                job.getStatus(),
+                job.getUpdatedAt(),
+                job.getOpenDate(),
+                job.getCloseDate())
+        );
     }
 }

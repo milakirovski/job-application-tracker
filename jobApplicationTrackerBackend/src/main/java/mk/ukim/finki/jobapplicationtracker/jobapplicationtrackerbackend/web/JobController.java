@@ -1,6 +1,7 @@
 package mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.web;
 
 import mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.dto.CreateJobDto;
+import mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.dto.DetailedDisplayJob;
 import mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.dto.DisplayJob;
 import mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.dto.UpdateJobDto;
 import mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.service.application.JobApplicationService;
@@ -68,4 +69,10 @@ public class JobController {
         }
     }
 
+    @GetMapping("/details/{id}")
+    public ResponseEntity<DetailedDisplayJob> getDetailedJobById(@PathVariable String id) {
+        return jobApplicationService.getDetailedJobById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 }

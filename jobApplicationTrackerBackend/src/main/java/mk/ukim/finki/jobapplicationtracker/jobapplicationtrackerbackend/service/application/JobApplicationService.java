@@ -1,6 +1,7 @@
 package mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.service.application;
 
 import mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.dto.CreateJobDto;
+import mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.dto.DetailedDisplayJob;
 import mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.dto.DisplayJob;
 import mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.dto.UpdateJobDto;
 
@@ -18,4 +19,6 @@ public interface JobApplicationService {
     Optional<DisplayJob> update(String id, UpdateJobDto jobDto) throws MalformedURLException;
 
     void deleteById(String id);
+
+    Optional<DetailedDisplayJob> getDetailedJobById(String id);
 }
