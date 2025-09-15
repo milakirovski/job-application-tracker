@@ -1,14 +1,10 @@
 package mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
 import com.mongodb.annotations.Immutable;
-import mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.model.Job;
 import mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.model.enums.*;
 import lombok.Data;
 
-import java.net.URL;
 import java.time.LocalDateTime;
 
 @Data

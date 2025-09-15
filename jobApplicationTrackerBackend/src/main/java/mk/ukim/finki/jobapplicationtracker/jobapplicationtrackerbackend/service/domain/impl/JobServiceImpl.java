@@ -1,13 +1,10 @@
 package mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.service.domain.impl;
 
-import mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.exceptions.InvalidJobId;
 import mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.model.Job;
 import mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.model.enums.*;
 import mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.repository.JobRepository;
 import mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.service.domain.JobService;
 import org.springframework.stereotype.Service;
-
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -34,7 +31,7 @@ public class JobServiceImpl implements JobService {
 
 
     @Override
-    public Job save(String title, String company, String location, String description, FieldOfInterest fieldOfInterest, PositionLevel position, WorkMode workMode, WorkType workType, URL companyWebsite, JobStatus status, LocalDateTime openDate, LocalDateTime closeDate) throws MalformedURLException {
+    public Job save(String title, String company, String location, String description, FieldOfInterest fieldOfInterest, PositionLevel position, WorkMode workMode, WorkType workType, URL companyWebsite, JobStatus status, LocalDateTime openDate, LocalDateTime closeDate) {
         return jobRepository.save(
                 new Job(title,
                         company,
@@ -54,7 +51,7 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public Optional<Job> update(String id, String title, String company, String location, String description, FieldOfInterest fieldOfInterest, PositionLevel position, WorkMode workMode, WorkType workType, URL companyWebsite, JobStatus status, LocalDateTime openDate, LocalDateTime closeDate) throws MalformedURLException {
+    public Optional<Job> update(String id, String title, String company, String location, String description, FieldOfInterest fieldOfInterest, PositionLevel position, WorkMode workMode, WorkType workType, URL companyWebsite, JobStatus status, LocalDateTime openDate, LocalDateTime closeDate) {
         return jobRepository.findById(id)
                 .map(existingJob -> {
                     if(title != null){

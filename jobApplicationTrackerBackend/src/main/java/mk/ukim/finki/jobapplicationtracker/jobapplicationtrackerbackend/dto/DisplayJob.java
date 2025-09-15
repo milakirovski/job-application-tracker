@@ -8,7 +8,6 @@ import mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.model.Jo
 import mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.model.enums.*;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Immutable
 @Data
