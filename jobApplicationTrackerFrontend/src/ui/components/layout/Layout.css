@@ -1,0 +1,14 @@
+.layout-box{
+    margin-top: -10px;
+    margin-left: -10px;
+}
+.outlet-container{
+    background-color: #d7dee4;
+    border-radius: 20px;
+    padding: 30px;
+}
+
+.sidebar-outlet-container{
+    display: flex;
+    justify-content: flex-end;
+}
