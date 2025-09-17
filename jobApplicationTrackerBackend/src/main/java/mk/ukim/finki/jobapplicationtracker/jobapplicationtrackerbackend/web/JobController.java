@@ -4,6 +4,7 @@ import mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.dto.Crea
 import mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.dto.DetailedDisplayJob;
 import mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.dto.DisplayJob;
 import mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.dto.UpdateJobDto;
+import mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.model.enums.*;
 import mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.service.application.JobApplicationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +12,12 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.MalformedURLException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/jobs")
 public class JobController {
@@ -74,5 +78,40 @@ public class JobController {
         return jobApplicationService.getDetailedJobById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/field-of-interest-options")
+    public List<String> getFieldOfInterestOptions() {
+        return Arrays.stream(FieldOfInterest.values())
+                .map(Enum::name)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/job-status")
+    public List<String> getJobStatusOptions() {
+        return Arrays.stream(JobStatus.values())
+                .map(Enum::name)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/position-level")
+    public List<String> getJobPositionLevelOptions() {
+        return Arrays.stream(PositionLevel.values())
+                .map(Enum::name)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/work-mode")
+    public List<String> getWorkModeOptions(){
+        return Arrays.stream(WorkMode.values())
+                .map(Enum::name)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/work-type")
+    public List<String> getWorkTypeOptions(){
+        return Arrays.stream(WorkType.values())
+                .map(Enum::name)
+                .collect(Collectors.toList());
     }
 }

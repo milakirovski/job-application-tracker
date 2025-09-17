@@ -1,6 +1,5 @@
 package mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mongodb.annotations.Immutable;
 import mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.model.enums.*;
 import lombok.Data;
@@ -29,10 +28,10 @@ public class UpdateJobDto {
 
     private String companyWebsite;
 
-    @JsonFormat(pattern = "dd.MM.yyyy HH:mm")
+//    @JsonFormat(pattern = "dd.MM.yyyy HH:mm") //test for postman
     private LocalDateTime closeDate;
 
-    @JsonFormat(pattern = "dd.MM.yyyy HH:mm")
+//    @JsonFormat(pattern = "dd.MM.yyyy HH:mm") ////test for postman
     private LocalDateTime openDate;
 
     private JobStatus status;

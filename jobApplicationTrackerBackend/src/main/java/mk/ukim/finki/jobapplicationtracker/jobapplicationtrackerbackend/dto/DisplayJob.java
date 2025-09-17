@@ -1,6 +1,5 @@
 package mk.ukim.finki.jobapplicationtracker.jobapplicationtrackerbackend.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mongodb.annotations.Immutable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +12,9 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class DisplayJob {
+
+    private String id;
+
     private String title;
 
     private String company;
@@ -25,10 +27,8 @@ public class DisplayJob {
 
     private WorkType workType;
 
-    @JsonFormat(pattern = "dd.MM.yyyy HH:mm")
     private LocalDateTime openDate;
 
-    @JsonFormat(pattern = "dd.MM.yyyy HH:mm")
     private LocalDateTime closeDate;
 
     private JobStatus status;
@@ -37,6 +37,7 @@ public class DisplayJob {
     public static List<DisplayJob> from(List<Job> jobs) {
         return jobs.stream()
                 .map(job -> new DisplayJob(
+                        job.getId(),
                         job.getTitle(),
                         job.getCompany(),
                         job.getLocation(),
@@ -52,6 +53,7 @@ public class DisplayJob {
 
     public static DisplayJob from (Job job){
         return new  DisplayJob(
+                job.getId(),
                 job.getTitle(),
                 job.getCompany(),
                 job.getLocation(),
