@@ -8,7 +8,8 @@ import axios from "axios";
  Vite does not load the .env.production file. In this case, import.meta.env.VITE_API_URL will be undefined.
 */
 
-const baseURL = import.meta.env.VITE_API_URL;
+// const baseURL = import.meta.env.VITE_API_URL;
+const baseURL = "/api";
 
 const axiosInstance = axios.create({
     baseURL: baseURL,
