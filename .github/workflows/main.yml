@@ -20,15 +20,21 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
+      - name: Extract metadata for Backend image
+        id: meta-backend
         uses: docker/metadata-action@v5
         with:
-          images: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/job-tracker-backend
-            ${{ secrets.DOCKERHUB_USERNAME }}/job-tracker-frontend
+          images: ${{ secrets.DOCKERHUB_USERNAME }}/job-tracker-backend
           tags: |
-            # This will generate two tags: one with the run number, and one with 'latest'
+            type=raw,value=${{ github.run_number }}
+            type=raw,value=latest
+
+      - name: Extract metadata for Frontend image
+        id: meta-frontend
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ secrets.DOCKERHUB_USERNAME }}/job-tracker-frontend
+          tags: |
             type=raw,value=${{ github.run_number }}
             type=raw,value=latest
 
@@ -38,9 +44,9 @@ jobs:
           context: ./jobApplicationTrackerBackend
           file: ./jobApplicationTrackerBackend/DockerfileBackend
           push: true
-          # The 'build-push' action automatically uses all generated tags
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          # backend-specific tags
+          tags: ${{ steps.meta-backend.outputs.tags }}
+          labels: ${{ steps.meta-backend.outputs.labels }}
 
       - name: Build and push Frontend Docker image
         uses: docker/build-push-action@v5
@@ -48,8 +54,9 @@ jobs:
           context: ./jobApplicationTrackerFrontend
           file: ./jobApplicationTrackerFrontend/DockerfileFrontend
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          # frontend-specific tags
+          tags: ${{ steps.meta-frontend.outputs.tags }}
+          labels: ${{ steps.meta-frontend.outputs.labels }}
 
   deploy:
     name: Update Kubernetes Manifests
@@ -64,7 +71,6 @@ jobs:
 
       - name: Update Backend Image Tag
         run: |
-          # Best practice is to deploy the specific version, not 'latest'
           sed -i 's|image: .*|image: ${{ secrets.DOCKERHUB_USERNAME }}/job-tracker-backend:${{ needs.build-and-push.outputs.version }}|g' backend-deployment.yaml
 
       - name: Update Frontend Image Tag
