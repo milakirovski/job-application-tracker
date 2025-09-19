@@ -7,7 +7,7 @@ import axios from "axios";
 /*For Kubernetes: When your DockerfileFrontend runs npm run build, it's a production build.
  Vite does not load the .env.development file. In this case, import.meta.env.VITE_API_URL will be undefined.
 */
-const baseURL = import.meta.env.VITE_API_URL || "/api";
+const baseURL = 'http://localhost:8080/api'
 
 const axiosInstance = axios.create({
     baseURL: baseURL,
