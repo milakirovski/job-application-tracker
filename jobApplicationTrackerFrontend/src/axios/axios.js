@@ -5,9 +5,10 @@ import axios from "axios";
 // This code now correctly reads the variable and defaults to a relative path.
 
 /*For Kubernetes: When your DockerfileFrontend runs npm run build, it's a production build.
- Vite does not load the .env.development file. In this case, import.meta.env.VITE_API_URL will be undefined.
+ Vite does not load the .env.production file. In this case, import.meta.env.VITE_API_URL will be undefined.
 */
-const baseURL = 'http://localhost:8080/api'
+
+const baseURL = import.meta.env.VITE_API_URL;
 
 const axiosInstance = axios.create({
     baseURL: baseURL,
@@ -17,3 +18,14 @@ const axiosInstance = axios.create({
 });
 
 export default axiosInstance;
+
+// const baseURL = 'http://localhost:8080/api'
+//
+// const axiosInstance = axios.create({
+//     baseURL: baseURL,
+//     headers: {
+//         "Content-Type": "application/json",
+//     },
+// });
+//
+// export default axiosInstance;
