@@ -28,7 +28,9 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/job-tracker-backend
             ${{ secrets.DOCKERHUB_USERNAME }}/job-tracker-frontend
           tags: |
+            # This will generate two tags: one with the run number, and one with 'latest'
             type=raw,value=${{ github.run_number }}
+            type=raw,value=latest
 
       - name: Build and push Backend Docker image
         uses: docker/build-push-action@v5
@@ -36,6 +38,7 @@ jobs:
           context: ./jobApplicationTrackerBackend
           file: ./jobApplicationTrackerBackend/DockerfileBackend
           push: true
+          # The 'build-push' action automatically uses all generated tags
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
@@ -61,6 +64,7 @@ jobs:
 
       - name: Update Backend Image Tag
         run: |
+          # Best practice is to deploy the specific version, not 'latest'
           sed -i 's|image: .*|image: ${{ secrets.DOCKERHUB_USERNAME }}/job-tracker-backend:${{ needs.build-and-push.outputs.version }}|g' backend-deployment.yaml
 
       - name: Update Frontend Image Tag
@@ -72,16 +76,12 @@ jobs:
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "actions-bot@github.com"
           
-          # Stage the modified files
           git add .
           
-          # Check if there are any staged changes. If not, exit gracefully.
           if git diff --staged --quiet; then
             echo "No changes to commit. Working tree is clean."
             exit 0
           fi
           
-          # If there are changes, commit and push them.
           git commit -m "Update image tags to version ${{ needs.build-and-push.outputs.version }}"
           git push
-
