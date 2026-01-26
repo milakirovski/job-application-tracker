@@ -1,4 +1,4 @@
-name: CI - Build, Push images to Docker Hub and Deploy to Kubernetes
+name: CI - Build, Push images to Docker Hub and Update Kubernetes Manifests
 
 on:
   push:
@@ -58,7 +58,7 @@ jobs:
           tags: ${{ steps.meta-frontend.outputs.tags }}
           labels: ${{ steps.meta-frontend.outputs.labels }}
 
-  deploy:
+  update-manifests:
     name: Update Kubernetes Manifests
     needs: build-and-push
     runs-on: ubuntu-latest
