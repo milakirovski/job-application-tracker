@@ -17,7 +17,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "http://frontend-service:80")
+//@CrossOrigin(origins = "http://frontend-service:80")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/jobs")
 public class JobController {
