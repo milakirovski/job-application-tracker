@@ -1,11 +1,8 @@
 import {
-    AppBar, Toolbar, Box, IconButton, Badge, Avatar, InputBase, Paper, Typography
+    AppBar, Toolbar, Box, IconButton, Badge, Avatar, Typography
 } from "@mui/material";
-import SearchRounded from "@mui/icons-material/SearchRounded";
 import HelpOutlineRounded from "@mui/icons-material/HelpOutlineRounded";
 import NotificationsNoneRounded from "@mui/icons-material/NotificationsNoneRounded";
-
-const ORANGE = "#ff4d1f";
 
 export default function Header() {
     return (
@@ -19,7 +16,7 @@ export default function Header() {
                 }}
         >
             <Toolbar sx={{ gap: 2 , justifyContent: "space-between"}}>
-                <Typography variant="h5">Job Application Tracker Application </Typography>
+                <Typography variant="h5">Job Application Tracker</Typography>
                 {/*/!* Big rounded search *!/*/}
                 {/*<Paper*/}
                 {/*    sx={{*/}
